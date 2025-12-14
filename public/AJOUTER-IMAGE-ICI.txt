@@ -1,0 +1,31 @@
+========================================
+  COMMENT AJOUTER VOTRE IMAGE
+========================================
+
+1. Prenez l'image gradient orange/rouge que vous avez envoyée
+
+2. Sauvegardez-la dans ce dossier (/public/) avec le nom :
+   
+   banner-bg.jpg
+
+3. Rafraîchissez votre navigateur (Ctrl + Shift + R)
+
+4. L'image s'animera automatiquement !
+
+========================================
+
+ALTERNATIVE : Si vous n'avez pas l'image
+
+Le site utilise déjà un gradient CSS très similaire comme fallback.
+L'animation fonctionne dans tous les cas !
+
+========================================
+
+Format image recommandé :
+- Dimensions : 1920x1080px minimum
+- Format : JPG ou PNG
+- Poids : < 500KB
+
+========================================
+
+

@@ -1,0 +1,2225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================
+   HERO BANNER - Image animée
+   =================================== */
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  min-height: 75vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 16px;
+  margin-top: 20px;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .hero-banner {
+    min-height: 70vh;
+    border-radius: 20px;
+    margin-top: 40px;
+    align-items: center;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-banner {
+    min-height: 85vh;
+    border-radius: 24px;
+    margin-top: 0;
+  }
+}
+
+/* Fond animé avec gradient (même style que le footer mais plus rapide) */
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    /* Abstraction colorée floue orange/noir - formes organiques multiples */
+    radial-gradient(ellipse 800px 600px at 20% 25%, rgba(255, 120, 60, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 75% 70%, rgba(255, 80, 40, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 900px 700px at 50% 85%, rgba(200, 50, 30, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 800px at 85% 35%, rgba(255, 140, 80, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse 750px 600px at 15% 60%, rgba(180, 40, 20, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 750px at 60% 20%, rgba(255, 100, 50, 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 850px 550px at 40% 50%, rgba(220, 60, 35, 0.4) 0%, transparent 70%),
+    /* Fond de base noir avec nuances orange */
+    linear-gradient(135deg, #0a0300 0%, #1a0800 15%, #2a0f00 30%, #3d1500 45%, #4d1a00 50%, #3d1500 55%, #2a0f00 70%, #1a0800 85%, #0a0300 100%);
+  background-size: 120% 120%;
+  background-position: center;
+  filter: blur(25px) brightness(0.9);
+  transform: scale(1.15);
+  z-index: 0;
+  opacity: 1;
+  animation: heroBackgroundAppear 1s ease-out forwards, heroMove 18s ease-in-out infinite 1s, abstractPulse 12s ease-in-out infinite;
+}
+
+/* Animation de pulsation pour l'abstraction colorée */
+@keyframes abstractPulse {
+  0%, 100% {
+    filter: blur(25px) brightness(0.9);
+    background-position: 50% 50%;
+  }
+  25% {
+    filter: blur(30px) brightness(1);
+    background-position: 45% 55%;
+  }
+  50% {
+    filter: blur(28px) brightness(0.95);
+    background-position: 55% 45%;
+  }
+  75% {
+    filter: blur(32px) brightness(1.05);
+    background-position: 50% 50%;
+  }
+}
+
+/* Animation d'apparition du fond du haut vers le bas */
+@keyframes heroBackgroundAppear {
+  0% {
+    opacity: 0;
+    transform: scale(1.1) translateY(-60px);
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(1.1) translateY(0);
+  }
+}
+
+/* Animation rapide - mouvement fluide et respiration */
+@keyframes heroMove {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.18) translate(-3%, 2%);
+  }
+}
+
+/* Overlay pour lisibilité du texte */
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 100%);
+  z-index: 1;
+}
+
+/* Animation lente - les oranges bougent */
+@keyframes moveGradient {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.2) translate(3%, -2%);
+  }
+}
+
+/* Contenu de la bannière */
+.hero-content {
+  text-align: left;
+  z-index: 3;
+  color: white;
+  max-width: 1200px;
+  padding: 0 16px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .hero-content {
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-content {
+    padding: 0 48px;
+  }
+}
+
+.hero-content h1 {
+  line-height: 1.1;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* ===================================
+   FLOATING BANK CARDS 3D ANIMATION
+   =================================== */
+
+/* Wrappers pour les cartes flottantes - z-index cohérent */
+.hero-banner > .absolute.inset-0,
+.comparator-banner > .absolute.inset-0 {
+  z-index: 2;
+}
+
+.floating-cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.floating-cards-track,
+.floating-cards-track-reverse {
+  display: flex;
+  gap: 2rem;
+  position: absolute;
+  white-space: nowrap;
+  padding: 0 2rem;
+  pointer-events: auto;
+}
+
+/* Animation de gauche à droite */
+.floating-cards-track {
+  animation: scrollLeft 40s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
+}
+
+/* Animation de droite à gauche (plus lent) */
+.floating-cards-track-reverse {
+  animation: scrollRight 50s linear infinite;
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-33.33%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Carte bancaire 3D - Format adapté à la bannière */
+.floating-card {
+  position: relative;
+  width: 280px;
+  height: 450px;
+  flex-shrink: 0;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.floating-card:hover {
+  transform: scale(1.15) translateZ(20px);
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.8));
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .floating-card {
+    width: 200px;
+    height: 320px;
+  }
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Texture carbone noir métallique */
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #000 0px,
+      #000 2px,
+      #1a1a1a 2px,
+      #1a1a1a 4px,
+      #000 4px,
+      #000 6px,
+      #2a2a2a 6px,
+      #2a2a2a 8px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      #0a0a0a 0px,
+      #0a0a0a 2px,
+      #252525 2px,
+      #252525 4px,
+      #0a0a0a 4px,
+      #0a0a0a 6px,
+      #1f1f1f 6px,
+      #1f1f1f 8px
+    ),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #000000 50%, #1a1a1a 100%);
+  background-size: 8px 8px, 8px 8px, 200% 200%, 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Effet de brillance sur la carte */
+.card-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  animation: cardShine 3s ease-in-out infinite;
+}
+
+@keyframes cardShine {
+  0%, 90%, 100% {
+    left: -100%;
+  }
+  45%, 55% {
+    left: 150%;
+  }
+}
+
+.card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Puce dorée EMV - en bas à gauche, verticale */
+.card-chip {
+  position: absolute;
+  bottom: 60px;
+  left: 75px;
+  width: 40px;
+  height: 50px;
+  background: linear-gradient(135deg, 
+    #FFD700 0%, 
+    #FFA500 20%, 
+    #FFD700 40%, 
+    #DAA520 60%, 
+    #FFD700 80%, 
+    #B8860B 100%
+  );
+  border-radius: 6px;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* Grille de la puce (motif des contacts) */
+.card-chip::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  border-radius: 3px;
+}
+
+/* Position en haut à gauche */
+.card-content-top-right {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 2;
+}
+
+/* Nom de la banque fixe - en horizontal avec effet de brillance */
+.bank-name-float-fixed {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Animation de clignotement doré pour chaque lettre */
+.bank-letter-glow {
+  display: inline-block;
+  animation: letterGlowGold 3s ease-in-out infinite;
+}
+
+/* Animation mode nuit - vague dorée de gauche à droite */
+@keyframes letterGlowGold {
+  0%, 100% {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: none;
+    filter: brightness(1);
+  }
+  30%, 50% {
+    color: #FFD700;
+    text-shadow: 
+      0 0 10px #FFD700,
+      0 0 20px #FFA500,
+      0 0 30px #FF8C00,
+      0 0 40px #FFD700;
+    filter: brightness(1.5);
+  }
+  80% {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: none;
+    filter: brightness(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .bank-name-float-fixed {
+    font-size: 0.65rem;
+  }
+  
+  .card-content-top-right {
+    top: 12px;
+    right: 16px;
+  }
+}
+
+/* ===================================
+   BADGE TEXT WAVE ANIMATION
+   =================================== */
+
+/* Animation badge - vague orange de gauche à droite */
+@keyframes badgeLetterGlow {
+  0%, 100% {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 0px rgba(255, 122, 26, 0);
+  }
+  30%, 50% {
+    color: #ff7a1a;
+    text-shadow: 0 0 15px rgba(255, 122, 26, 0.8),
+                 0 0 30px rgba(255, 154, 86, 0.5);
+  }
+  80% {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 0px rgba(255, 122, 26, 0);
+  }
+}
+
+
+.badge-text-wave span {
+  animation: badgeLetterGlow 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Badge en mode jour - noir → orange avec glow */
+body.light-mode .badge-text-wave span {
+  animation: badgeLetterGlowFromBlack 2s ease-in-out infinite !important;
+}
+
+/* Animation badge mode jour - vague orange de gauche à droite */
+@keyframes badgeLetterGlowFromBlack {
+  0%, 100% {
+    color: #000000;  /* Noir */
+    text-shadow: 0 0 0px rgba(255, 122, 26, 0);
+  }
+  30%, 50% {
+    color: #ff7a1a;  /* Orange */
+    text-shadow: 0 0 15px rgba(255, 122, 26, 0.8),
+                 0 0 30px rgba(255, 154, 86, 0.5);
+  }
+  80% {
+    color: #000000;
+    text-shadow: 0 0 0px rgba(255, 122, 26, 0);
+  }
+}
+
+/* ===================================
+   BANK CARD TITLE HOVER ANIMATION
+   =================================== */
+
+.group:hover .bank-card-title span {
+  animation: badgeLetterGlow 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* ===================================
+   STATS ICON SEQUENTIAL GLOW ANIMATION
+   =================================== */
+
+@keyframes iconGlowPulse {
+  0%, 85%, 100% {
+    filter: drop-shadow(0 0 0px rgba(255, 122, 26, 0));
+    transform: scale(1);
+  }
+  40%, 50% {
+    filter: drop-shadow(0 0 20px rgba(255, 122, 26, 1)) 
+            drop-shadow(0 0 40px rgba(255, 154, 86, 0.8));
+    transform: scale(1.1);
+  }
+}
+
+.stats-icon-animate {
+  animation: iconGlowPulse 8s ease-in-out infinite;
+}
+
+/* Délais séquentiels pour chaque icône (8 icônes au total) */
+.stats-icon-animate:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.stats-icon-animate:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.stats-icon-animate:nth-child(3) {
+  animation-delay: 2s;
+}
+
+.stats-icon-animate:nth-child(4) {
+  animation-delay: 3s;
+}
+
+.stats-icon-animate:nth-child(5) {
+  animation-delay: 4s;
+}
+
+.stats-icon-animate:nth-child(6) {
+  animation-delay: 5s;
+}
+
+.stats-icon-animate:nth-child(7) {
+  animation-delay: 6s;
+}
+
+.stats-icon-animate:nth-child(8) {
+  animation-delay: 7s;
+}
+
+/* ===================================
+   FAQ ICON GLOW ANIMATION
+   =================================== */
+
+.faq-icon-glow {
+  animation: iconGlowPulse 3s ease-in-out infinite;
+}
+
+/* ===================================
+   STAR GRADIENT ANIMATION
+   =================================== */
+
+.star-container {
+  position: relative;
+}
+
+.star-filled {
+  filter: drop-shadow(0 0 2px rgba(255, 122, 26, 0.5));
+}
+
+.star-stop-1 {
+  stop-color: #ff9a56;
+  animation: stopColor1 3s ease-in-out infinite;
+}
+
+.star-stop-2 {
+  stop-color: #ff7a1a;
+  animation: stopColor2 3s ease-in-out infinite;
+}
+
+.star-stop-3 {
+  stop-color: #ffb380;
+  animation: stopColor3 3s ease-in-out infinite;
+}
+
+@keyframes stopColor1 {
+  0%, 100% { stop-color: #ff9a56; }
+  25% { stop-color: #ff7a1a; }
+  50% { stop-color: #ff5500; }
+  75% { stop-color: #ff7a1a; }
+}
+
+@keyframes stopColor2 {
+  0%, 100% { stop-color: #ff7a1a; }
+  25% { stop-color: #ff5500; }
+  50% { stop-color: #ff7a1a; }
+  75% { stop-color: #ff9a56; }
+}
+
+@keyframes stopColor3 {
+  0%, 100% { stop-color: #ffb380; }
+  25% { stop-color: #ff9a56; }
+  50% { stop-color: #ff7a1a; }
+  75% { stop-color: #ff9a56; }
+}
+
+/* ===================================
+   BANK CARD STARS - Clignotement Or Brillant Séquentiel
+   =================================== */
+
+.bank-card-star {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.bank-card-star.star-filled {
+  color: #ff7a1a;
+  filter: drop-shadow(0 0 2px rgba(255, 122, 26, 0.5));
+}
+
+/* Animation de clignotement or brillant pour chaque étoile */
+@keyframes starBlink {
+  0%, 80%, 100% {
+    color: #ff7a1a;
+    filter: drop-shadow(0 0 2px rgba(255, 122, 26, 0.5));
+    transform: scale(1);
+  }
+  10%, 70% {
+    color: #ffd700;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)) 
+            drop-shadow(0 0 20px rgba(255, 215, 0, 0.8))
+            drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+    transform: scale(1.3);
+  }
+}
+
+/* Délais séquentiels - chaque étoile clignote une par une de gauche à droite */
+.bank-card-star.star-filled:nth-child(1) {
+  animation: starBlink 2.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.bank-card-star.star-filled:nth-child(2) {
+  animation: starBlink 2.5s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.bank-card-star.star-filled:nth-child(3) {
+  animation: starBlink 2.5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.bank-card-star.star-filled:nth-child(4) {
+  animation: starBlink 2.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.bank-card-star.star-filled:nth-child(5) {
+  animation: starBlink 2.5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* ===================================
+   BANK DETAIL PAGE ANIMATIONS
+   =================================== */
+
+/* Badge gradient animation */
+.bank-badge-gradient {
+  background: linear-gradient(90deg, 
+    #ff7a1a 0%, 
+    #ff9a56 20%, 
+    #ffb380 40%,
+    #ff9a56 60%,
+    #ff7a1a 80%,
+    #ff5500 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: badgeGradientShift 3s ease-in-out infinite;
+}
+
+@keyframes badgeGradientShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Title gradient animation */
+.bank-title-gradient {
+  background: linear-gradient(90deg, 
+    #ffffff 0%, 
+    #ffb380 15%, 
+    #ff9a56 30%, 
+    #ff7a1a 45%,
+    #ff9a56 60%,
+    #ffb380 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleGradientShift 4s ease-in-out infinite;
+}
+
+@keyframes titleGradientShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Bank page star gradient - more visible */
+.bank-star-gradient stop:nth-child(1) {
+  stop-color: #ff7a1a;
+  animation: bankStarColor1 2.5s ease-in-out infinite;
+}
+
+.bank-star-gradient stop:nth-child(2) {
+  stop-color: #ff5500;
+  animation: bankStarColor2 2.5s ease-in-out infinite;
+}
+
+.bank-star-gradient stop:nth-child(3) {
+  stop-color: #ff9a56;
+  animation: bankStarColor3 2.5s ease-in-out infinite;
+}
+
+@keyframes bankStarColor1 {
+  0%, 100% { stop-color: #ff7a1a; }
+  33% { stop-color: #ff5500; }
+  66% { stop-color: #ff9a56; }
+}
+
+@keyframes bankStarColor2 {
+  0%, 100% { stop-color: #ff5500; }
+  33% { stop-color: #ff9a56; }
+  66% { stop-color: #ffb380; }
+}
+
+@keyframes bankStarColor3 {
+  0%, 100% { stop-color: #ff9a56; }
+  33% { stop-color: #ffb380; }
+  66% { stop-color: #ff7a1a; }
+}
+
+/* ===================================
+   COMPARATOR BADGE ANIMATION (Right to Left)
+   =================================== */
+
+.comparator-badge-gradient {
+  background: linear-gradient(90deg, 
+    #ff5500 0%,
+    #ff7a1a 20%, 
+    #ff9a56 40%, 
+    #ffb380 60%,
+    #ff9a56 80%,
+    #ff7a1a 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: comparatorBadgeShift 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 26, 0.6));
+}
+
+@keyframes comparatorBadgeShift {
+  0%, 100% {
+    background-position: 100% center;  /* Start from right */
+  }
+  50% {
+    background-position: 0% center;    /* Move to left */
+  }
+}
+
+/* ===================================
+   HEADER LOGO & TEXT ANIMATION
+   =================================== */
+
+/* Logo gradient animation */
+.header-logo-gradient {
+  background: linear-gradient(90deg, 
+    #ff5500 0%,
+    #ff7a1a 25%, 
+    #ff9a56 50%, 
+    #ffb380 75%,
+    #ff5500 100%
+  );
+  background-size: 200% auto;
+  animation: headerLogoShift 3s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 122, 26, 0.5);
+}
+
+@keyframes headerLogoShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Text "Banques." gradient animation */
+.header-text-gradient {
+  background: linear-gradient(90deg, 
+    #ffffff 0%,
+    #ffb380 20%, 
+    #ff9a56 35%, 
+    #ff7a1a 50%,
+    #ff9a56 65%,
+    #ffb380 80%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: headerTextShift 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 26, 0.4));
+}
+
+@keyframes headerTextShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* ===================================
+   FOOTER TITLE ANIMATION (Right to Left)
+   =================================== */
+
+.footer-title-gradient {
+  background: linear-gradient(90deg, 
+    #ff5500 0%,
+    #ff7a1a 25%, 
+    #ff9a56 50%, 
+    #ffb380 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: footerTitleShift 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 122, 26, 0.5));
+}
+
+@keyframes footerTitleShift {
+  0%, 100% {
+    background-position: 100% center;  /* Start from right */
+  }
+  50% {
+    background-position: 0% center;    /* Move to left */
+  }
+}
+
+/* ===================================
+   FOOTER SOCIAL ICONS ANIMATION (Sequential)
+   =================================== */
+
+.social-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.social-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    transparent 0%,
+    rgba(255, 85, 0, 0.3) 20%,
+    rgba(255, 122, 26, 0.6) 40%,
+    rgba(255, 154, 86, 0.8) 50%,
+    rgba(255, 122, 26, 0.6) 60%,
+    rgba(255, 85, 0, 0.3) 80%,
+    transparent 100%
+  );
+  border-radius: 9999px;
+  opacity: 0;
+  animation: socialPulse 4s ease-in-out infinite;
+}
+
+/* Délais pour chaque icône */
+.social-icon:nth-child(1)::before {
+  animation-delay: 0s;  /* X - commence immédiatement */
+}
+
+.social-icon:nth-child(2)::before {
+  animation-delay: 1s;  /* Instagram - 1s après */
+}
+
+.social-icon:nth-child(3)::before {
+  animation-delay: 2s;  /* Threads - 2s après */
+}
+
+.social-icon:nth-child(4)::before {
+  animation-delay: 3s;  /* TikTok - 3s après */
+}
+
+@keyframes socialPulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Animation pour les SVG à l'intérieur */
+.social-icon svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 0px rgba(255, 122, 26, 0));
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover svg,
+.social-icon.social-active svg {
+  filter: drop-shadow(0 0 8px rgba(255, 122, 26, 0.8));
+}
+
+/* Animation séquentielle des couleurs des icônes */
+@keyframes iconColorPulse {
+  0%, 100% {
+    color: rgb(156, 163, 175); /* text-muted */
+  }
+  40%, 60% {
+    color: rgb(255, 122, 26); /* text-accent */
+  }
+}
+
+.social-icon:nth-child(1) svg {
+  animation: iconColorPulse 4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.social-icon:nth-child(2) svg {
+  animation: iconColorPulse 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.social-icon:nth-child(3) svg {
+  animation: iconColorPulse 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.social-icon:nth-child(4) svg {
+  animation: iconColorPulse 4s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.hero-content p {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+@media (min-width: 640px) {
+  .hero-buttons {
+    gap: 14px;
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-buttons {
+    gap: 16px;
+    margin-top: 32px;
+  }
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .hero-btn {
+    padding: 14px 26px;
+    font-size: 0.9375rem;
+    gap: 10px;
+    border-radius: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-btn {
+    padding: 16px 32px;
+    font-size: 1rem;
+    gap: 12px;
+    border-radius: 16px;
+  }
+}
+
+.hero-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Bank discovery buttons - identical to hero-btn */
+.bank-discovery-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .bank-discovery-btn {
+    padding: 14px 26px;
+    font-size: 0.9375rem;
+    gap: 10px;
+    border-radius: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bank-discovery-btn {
+    padding: 16px 32px;
+    font-size: 1rem;
+    gap: 12px;
+    border-radius: 16px;
+  }
+}
+
+.bank-discovery-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   FAQ SECTION - Image animée
+   =================================== */
+
+.faq-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+/* Image animée en background avec ::before */
+.faq-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/faq-bg.jpg');
+  /* Fallback gradient si l'image n'existe pas */
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(255, 180, 120, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 80, 60, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 60, 40, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 140, 80, 0.35) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0505 0%, #2a0a00 20%, #4d1500 40%, #802000 60%, #4d1500 80%, #0f0505 100%);
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.1);
+  animation: faqMove 28s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.faq-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Animation lente pour FAQ - Identique au hero */
+@keyframes faqMove {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.15) translate(4%, -3%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ===================================
+   MODE CLAIR - Styles pour le thème jour
+   =================================== */
+
+body.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Header et Navigation en mode clair */
+body.light-mode header {
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Textes en mode clair */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6 {
+  color: #000000;
+}
+
+body.light-mode p,
+body.light-mode span,
+body.light-mode div {
+  color: #1a1a1a;
+}
+
+/* Hero Banner en mode clair - Fond orange identique à la version nuit */
+/* Hero Banner en mode clair - Abstraction colorée floue orange/blanc */
+body.light-mode .hero-banner::before {
+  background: 
+    /* Abstraction colorée floue orange/blanc - formes organiques multiples */
+    radial-gradient(ellipse 800px 600px at 20% 25%, rgba(255, 180, 120, 0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 75% 70%, rgba(255, 160, 100, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse 900px 700px at 50% 85%, rgba(255, 140, 90, 0.6) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 800px at 85% 35%, rgba(255, 200, 140, 0.65) 0%, transparent 50%),
+    radial-gradient(ellipse 750px 600px at 15% 60%, rgba(255, 150, 110, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 750px at 60% 20%, rgba(255, 170, 120, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse 850px 550px at 40% 50%, rgba(255, 190, 130, 0.55) 0%, transparent 70%),
+    /* Fond de base blanc avec nuances orange */
+    linear-gradient(135deg, #ffffff 0%, #fffaf5 15%, #fff5f0 30%, #ffe8d9 45%, #ffd4b3 50%, #ffe8d9 55%, #fff5f0 70%, #fffaf5 85%, #ffffff 100%);
+  background-size: 120% 120%;
+  background-position: center;
+  filter: blur(25px) brightness(1.1);
+  transform: scale(1.15);
+  opacity: 1;
+  animation: heroBackgroundAppearLight 1s ease-out forwards, heroMove 18s ease-in-out infinite 1s, abstractPulseLight 12s ease-in-out infinite;
+}
+
+/* Animation d'apparition du fond en mode jour */
+@keyframes heroBackgroundAppearLight {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15) translateY(0);
+  }
+}
+
+body.light-mode .hero-content h1,
+body.light-mode .hero-content p {
+  color: #000000;
+}
+
+/* Cartes bancaires en mode clair - Blanc métallique identique sur toutes les pages */
+body.light-mode .floating-card .card-inner,
+body.light-mode .card-inner {
+  /* Texture carbone blanc métallique */
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #f5f5f5 0px,
+      #f5f5f5 2px,
+      #ffffff 2px,
+      #ffffff 4px,
+      #f5f5f5 4px,
+      #f5f5f5 6px,
+      #fafafa 6px,
+      #fafafa 8px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      #f0f0f0 0px,
+      #f0f0f0 2px,
+      #fafafa 2px,
+      #fafafa 4px,
+      #f0f0f0 4px,
+      #f0f0f0 6px,
+      #f8f8f8 6px,
+      #f8f8f8 8px
+    ),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(240, 240, 240, 0.5) 50%),
+    linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #ffffff 100%) !important;
+  background-size: 8px 8px, 8px 8px, 200% 200%, 100% !important;
+  border: 1px solid rgba(200, 200, 200, 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Textes sur les cartes en mode clair */
+body.light-mode .floating-card .bank-name-float-fixed,
+body.light-mode .bank-name-float-fixed {
+  opacity: 1 !important;
+  color: #000000;
+}
+
+/* Animation en mode jour - noir → or avec glow */
+/* Animation lettre par lettre en mode jour - travelling doré très lent */
+body.light-mode .floating-card .bank-letter-glow,
+body.light-mode .bank-letter-glow {
+  animation: letterGlowGoldFromBlack 8s ease-in-out infinite !important;
+  color: #000000;
+}
+
+/* Animation mode jour - vague dorée subtile qui traverse lettre par lettre */
+@keyframes letterGlowGoldFromBlack {
+  0%, 10% {
+    color: #000000;  /* Noir bien visible */
+    text-shadow: none;
+    filter: brightness(1);
+  }
+  18% {
+    color: #D4A017;  /* Montée dorée douce */
+    text-shadow: 
+      0 0 4px rgba(255, 215, 0, 0.5),
+      0 0 8px rgba(255, 165, 0, 0.3);
+    filter: brightness(1.15);
+  }
+  22% {
+    color: #E6B800;  /* Pic doré - réduit */
+    text-shadow: 
+      0 0 6px rgba(255, 215, 0, 0.6),
+      0 0 12px rgba(255, 165, 0, 0.4),
+      0 0 18px rgba(255, 140, 0, 0.2);
+    filter: brightness(1.25);
+  }
+  26% {
+    color: #D4A017;  /* Descente dorée douce */
+    text-shadow: 
+      0 0 4px rgba(255, 215, 0, 0.5),
+      0 0 8px rgba(255, 165, 0, 0.3);
+    filter: brightness(1.15);
+  }
+  34%, 100% {
+    color: #000000;  /* Noir bien visible - longue pause */
+    text-shadow: none;
+    filter: brightness(1);
+  }
+}
+
+/* Puce dorée EMV identique sur toutes les cartes */
+body.light-mode .floating-card .card-chip,
+body.light-mode .card-chip {
+  background: linear-gradient(135deg, 
+    #FFD700 0%, 
+    #FFA500 20%, 
+    #FFD700 40%, 
+    #DAA520 60%, 
+    #FFD700 80%, 
+    #B8860B 100%
+  ) !important;
+}
+
+/* Animation letterGlowGold s'applique automatiquement en mode jour aussi */
+
+/* Animation de brillance sur les cartes en mode clair - identique sur toutes les pages */
+body.light-mode .floating-card .card-shine,
+body.light-mode .card-shine {
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 50% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.3) 30%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 215, 0, 0.3) 70%,
+    transparent 100%
+  ) !important;
+  transform: skewX(-25deg) !important;
+  animation: cardShine 3s ease-in-out infinite !important;
+  z-index: 10 !important;
+}
+
+/* Sections en mode clair */
+body.light-mode section {
+  background-color: #ffffff;
+}
+
+/* Exception pour le footer - pas de background blanc */
+/* Footer en mode clair - pas de background blanc sur l'élément footer */
+body.light-mode footer {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Footer-section en mode clair - Fond identique au mode nuit */
+body.light-mode .footer-section {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Footer en mode clair - Fond identique au mode nuit */
+body.light-mode .footer-section::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(255, 180, 120, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 80, 60, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 60, 40, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 140, 80, 0.35) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0505 0%, #2a0a00 20%, #4d1500 40%, #802000 60%, #4d1500 80%, #0f0505 100%) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  filter: blur(10px) !important;
+  transform: scale(1.1) !important;
+  z-index: -1 !important;
+  opacity: 0.75 !important;
+  animation: heroBackgroundAppear 1s ease-out forwards, heroMove 18s ease-in-out infinite 1s !important;
+  pointer-events: none !important;
+}
+
+/* Footer-content en mode clair - transparent pour voir le fond, mais contenu visible */
+body.light-mode .footer-content {
+  background: transparent !important;
+  background-color: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Tous les éléments du footer doivent être visibles au-dessus du fond */
+body.light-mode .footer-content > * {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Animation d'apparition du footer en mode jour */
+@keyframes footerBackgroundAppearLight {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15) translateY(0);
+  }
+}
+
+/* Animation de mouvement du footer en mode jour */
+@keyframes footerMoveLight {
+  0%, 100% {
+    transform: scale(1.15) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.23) translate(-3%, 2%);
+  }
+}
+
+/* Liens en mode clair */
+body.light-mode a {
+  color: #ff7a1a;
+}
+
+/* Pages de banques - fond blanc en mode jour */
+body.light-mode .bg-gradient-to-br {
+  background: linear-gradient(to bottom right, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(250, 250, 250, 0.95), 
+    rgba(255, 255, 255, 0.95)) !important;
+}
+
+body.light-mode .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.light-mode .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.light-mode .bg-black\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Tableaux - textes noirs en mode jour */
+body.light-mode table th,
+body.light-mode table td {
+  color: #000000 !important;
+}
+
+body.light-mode .text-foreground {
+  color: #000000 !important;
+}
+
+body.light-mode .text-foreground\/90 {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.light-mode .text-white {
+  color: #000000 !important;
+}
+
+/* Exception pour le footer - texte blanc car fond sombre */
+body.light-mode .footer-section .text-white,
+body.light-mode .footer-section h3,
+body.light-mode .footer-section h4,
+body.light-mode .footer-section p,
+body.light-mode .footer-section span,
+body.light-mode .footer-section a,
+body.light-mode .footer-section li {
+  color: #ffffff !important;
+}
+
+body.light-mode .footer-section .text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Titres et textes généraux en mode jour sur pages banques */
+body.light-mode .bank-title-gradient,
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode p,
+body.light-mode span,
+body.light-mode li {
+  color: #000000 !important;
+}
+
+body.light-mode .text-muted {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode a:hover {
+  color: #ff5500;
+}
+
+/* Boutons en mode clair */
+body.light-mode button {
+  color: #000000;
+}
+
+body.light-mode .text-muted {
+  color: #666666 !important;
+}
+
+body.light-mode .text-foreground {
+  color: #000000 !important;
+}
+
+/* Cartes de banques (BankCard) en mode clair */
+body.light-mode .bank-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .bank-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Comparator Banner en mode clair - Abstraction colorée floue orange/blanc */
+body.light-mode .comparator-banner::before {
+  background: 
+    /* Abstraction colorée floue orange/blanc - formes organiques multiples */
+    radial-gradient(ellipse 800px 600px at 20% 25%, rgba(255, 180, 120, 0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 75% 70%, rgba(255, 160, 100, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse 900px 700px at 50% 85%, rgba(255, 140, 90, 0.6) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 800px at 85% 35%, rgba(255, 200, 140, 0.65) 0%, transparent 50%),
+    radial-gradient(ellipse 750px 600px at 15% 60%, rgba(255, 150, 110, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 750px at 60% 20%, rgba(255, 170, 120, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse 850px 550px at 40% 50%, rgba(255, 190, 130, 0.55) 0%, transparent 70%),
+    /* Fond de base blanc avec nuances orange */
+    linear-gradient(135deg, #ffffff 0%, #fffaf5 15%, #fff5f0 30%, #ffe8d9 45%, #ffd4b3 50%, #ffe8d9 55%, #fff5f0 70%, #fffaf5 85%, #ffffff 100%);
+  background-size: 120% 120%;
+  background-position: center;
+  filter: blur(25px) brightness(1.1);
+  transform: scale(1.15);
+  opacity: 1;
+  animation: comparatorBackgroundAppearLight 1s ease-out forwards, comparatorMove 18s ease-in-out infinite 1s, abstractPulseLight 12s ease-in-out infinite;
+}
+
+/* Animation d'apparition du fond en mode jour */
+@keyframes comparatorBackgroundAppearLight {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15) translateY(0);
+  }
+}
+
+/* Animation de pulsation pour l'abstraction colorée en mode jour */
+@keyframes abstractPulseLight {
+  0%, 100% {
+    filter: blur(20px) brightness(1.05);
+    background-position: 50% 50%;
+  }
+  25% {
+    filter: blur(25px) brightness(1.1);
+    background-position: 45% 55%;
+  }
+  50% {
+    filter: blur(22px) brightness(1.08);
+    background-position: 55% 45%;
+  }
+  75% {
+    filter: blur(27px) brightness(1.12);
+    background-position: 50% 50%;
+  }
+}
+
+body.light-mode .comparator-banner-content h1,
+body.light-mode .comparator-banner-content p {
+  color: #000000;
+}
+
+/* FAQ en mode clair */
+body.light-mode .faq-section::before {
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(255, 180, 120, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #f8f8f8 0%, #ffffff 50%, #f5f5f5 100%);
+  opacity: 0.6;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    @apply bg-card/50 backdrop-blur-xl border border-border;
+  }
+}
+
+/* Hero Banner Premium Animations */
+
+/* Animation lente pour le fond - Style Apple */
+@keyframes moveGradient {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0) rotate(0deg);
+    opacity: 0.9;
+  }
+  33% {
+    transform: scale(1.15) translate(3%, -2%) rotate(2deg);
+    opacity: 1;
+  }
+  66% {
+    transform: scale(1.12) translate(-2%, 3%) rotate(-1deg);
+    opacity: 0.95;
+  }
+}
+
+.banner-animated-bg {
+  animation: moveGradient 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Mesh Gradient Animations - Blobs mouvants */
+@keyframes mesh-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(15%, 10%) scale(1.1);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-10%, 15%) scale(0.95);
+    opacity: 0.9;
+  }
+}
+
+@keyframes mesh-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-20%, -15%) scale(1.15) rotate(180deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes mesh-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translate(20%, -10%) scale(1.2);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-15%, 5%) scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+@keyframes mesh-4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  33% {
+    transform: translate(-25%, 20%) scale(1.1) rotate(120deg);
+    opacity: 1;
+  }
+  66% {
+    transform: translate(10%, -15%) scale(0.95) rotate(240deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes mesh-5 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(15%, -20%) scale(1.25);
+    opacity: 0.6;
+  }
+}
+
+.animate-mesh-1 {
+  animation: mesh-1 35s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-mesh-2 {
+  animation: mesh-2 40s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-mesh-3 {
+  animation: mesh-3 30s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-mesh-4 {
+  animation: mesh-4 45s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-mesh-5 {
+  animation: mesh-5 38s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Respiration du fond - Ultra smooth (backup) */
+@keyframes breath {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0);
+    opacity: 0.9;
+  }
+  33% {
+    transform: scale(1.15) translate(2%, 1%);
+    opacity: 1;
+  }
+  66% {
+    transform: scale(1.12) translate(-1%, 2%);
+    opacity: 0.95;
+  }
+}
+
+.animate-breath {
+  animation: breath 30s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Pulsation des lumières */
+@keyframes light-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+.animate-light-pulse {
+  animation: light-pulse 8s ease-in-out infinite;
+}
+
+/* Float subtil */
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float-subtle 6s ease-in-out infinite;
+}
+
+/* Glow pulsant */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Fade in up - Entrée élégante */
+@keyframes fade-in-up-hero {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up-hero 1s ease-out forwards;
+}
+
+/* Scale in - Entrée badge */
+@keyframes scale-in-hero {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in-hero 0.8s ease-out forwards;
+}
+
+/* Shimmer effect */
+@keyframes shimmer-hero {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer-hero 8s linear infinite;
+}
+
+/* ===================================
+   FOOTER AVEC IMAGE FLUIDE ANIMÉE
+   =================================== */
+
+.footer-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Footer par défaut (mode nuit) - ne s'applique pas en mode clair */
+body:not(.light-mode) .footer-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(255, 180, 120, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 80, 60, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 60, 40, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 40%, rgba(255, 140, 80, 0.35) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0505 0%, #2a0a00 20%, #4d1500 40%, #802000 60%, #4d1500 80%, #0f0505 100%);
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.1);
+  z-index: -1;
+  opacity: 0.75;
+  animation: heroBackgroundAppear 1s ease-out forwards, heroMove 18s ease-in-out infinite 1s;
+}
+
+/* Animation lente - mouvement subtil comme une respiration */
+@keyframes footerMove {
+  0%, 100% {
+    transform: scale(1.1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.18) translate(-3%, 2%);
+  }
+}
+
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===================================
+   COMPARATOR BANNER - Image animée
+   =================================== */
+
+.comparator-banner {
+  position: relative;
+  width: 100%;
+  min-height: 75vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 16px;
+  margin-top: 20px;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .comparator-banner {
+    min-height: 60vh;
+    border-radius: 20px;
+    margin-top: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .comparator-banner {
+    min-height: 70vh;
+    align-items: center;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .comparator-banner {
+    min-height: 85vh;
+    border-radius: 24px;
+    margin-top: 0;
+  }
+}
+
+/* Fond animé avec gradient (même style que le hero banner) */
+.comparator-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    /* Abstraction colorée floue orange/noir - formes organiques multiples */
+    radial-gradient(ellipse 800px 600px at 20% 25%, rgba(255, 120, 60, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 75% 70%, rgba(255, 80, 40, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 900px 700px at 50% 85%, rgba(200, 50, 30, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 800px at 85% 35%, rgba(255, 140, 80, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse 750px 600px at 15% 60%, rgba(180, 40, 20, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 750px at 60% 20%, rgba(255, 100, 50, 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 850px 550px at 40% 50%, rgba(220, 60, 35, 0.4) 0%, transparent 70%),
+    /* Fond de base noir avec nuances orange */
+    linear-gradient(135deg, #0a0300 0%, #1a0800 15%, #2a0f00 30%, #3d1500 45%, #4d1a00 50%, #3d1500 55%, #2a0f00 70%, #1a0800 85%, #0a0300 100%);
+  background-size: 120% 120%;
+  background-position: center;
+  filter: blur(25px) brightness(0.9);
+  transform: scale(1.15);
+  z-index: 0;
+  opacity: 1;
+  animation: comparatorBackgroundAppear 1s ease-out forwards, comparatorMove 18s ease-in-out infinite 1s, abstractPulse 12s ease-in-out infinite;
+}
+
+/* Animation d'apparition du fond du haut vers le bas */
+@keyframes comparatorBackgroundAppear {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.15) translateY(0);
+  }
+}
+
+/* Animation rapide - mouvement fluide et respiration */
+@keyframes comparatorMove {
+  0%, 100% {
+    transform: scale(1.15) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.23) translate(-3%, 2%);
+  }
+}
+
+/* Overlay léger pour lisibilité du texte */
+.comparator-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 100%);
+  z-index: 1;
+}
+
+.comparator-banner-content {
+  position: relative;
+  z-index: 10;
+  text-align: left;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .comparator-banner-content {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .comparator-banner-content {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .comparator-banner-content {
+    padding: 0 3rem;
+  }
+}
+
+/* ===================================
+   NEWSLETTER LOGO ICON COLOR SHIFT ANIMATION
+   =================================== */
+
+@keyframes newsletterLogoColorShift {
+  0%, 100% {
+    color: #000000; /* Noir */
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    color: #FFD700; /* Doré/Or */
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
+    transform: scale(1.05);
+  }
+}
+
+.newsletter-logo-icon-color-shift {
+  animation: newsletterLogoColorShift 2.5s ease-in-out infinite;
+}
+
+/* ===================================
+   STAR GLOW ANIMATION
+   =================================== */
+
+@keyframes starGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0));
+    opacity: 0.7;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 12px rgba(255, 165, 0, 0.6));
+    opacity: 1;
+  }
+}
+
+.star-glow-animation {
+  animation: starGlow 1.5s ease-in-out infinite;
+}
+
+/* ===================================
+   MODERN APPLE-STYLE SCROLLBAR GLASSMORPHISM
+   =================================== */
+
+.modern-scrollbar-glass {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 122, 26, 0.5) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+.modern-scrollbar-glass::-webkit-scrollbar {
+  height: 12px;
+}
+
+.modern-scrollbar-glass::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.modern-scrollbar-glass::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, 
+    rgba(255, 122, 26, 0.6) 0%, 
+    rgba(255, 154, 86, 0.5) 50%, 
+    rgba(255, 122, 26, 0.6) 100%
+  );
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 2px 8px rgba(255, 122, 26, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.modern-scrollbar-glass::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 122, 26, 0.8) 0%, 
+    rgba(255, 154, 86, 0.7) 50%, 
+    rgba(255, 122, 26, 0.8) 100%
+  );
+  box-shadow: 
+    0 4px 12px rgba(255, 122, 26, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.modern-scrollbar-glass::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, 
+    rgba(255, 122, 26, 0.9) 0%, 
+    rgba(255, 154, 86, 0.8) 50%, 
+    rgba(255, 122, 26, 0.9) 100%
+  );
+}
+
+/* ===================================
+   ANIMATED GRADIENT BACKGROUND
+   =================================== */
+
+.animated-gradient-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%);
+}
+
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.8;
+  mix-blend-mode: screen;
+}
+
+/* Blob 1 - Rouge foncé */
+.gradient-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #8B0000 0%, #DC143C 50%, transparent 100%);
+  top: -10%;
+  left: -10%;
+  animation: blob-move-1 25s ease-in-out infinite;
+}
+
+/* Blob 2 - Orange */
+.gradient-blob-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #FF4500 0%, #FF8C00 50%, transparent 100%);
+  top: 20%;
+  right: -15%;
+  animation: blob-move-2 30s ease-in-out infinite;
+}
+
+/* Blob 3 - Rose/Rouge clair */
+.gradient-blob-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #CD5C5C 0%, #F08080 50%, transparent 100%);
+  bottom: -10%;
+  left: 30%;
+  animation: blob-move-3 20s ease-in-out infinite;
+}
+
+/* Blob 4 - Orange foncé */
+.gradient-blob-4 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #D2691E 0%, #FF7F50 50%, transparent 100%);
+  top: 50%;
+  left: 10%;
+  animation: blob-move-4 28s ease-in-out infinite;
+}
+
+/* Blob 5 - Rouge/Marron */
+.gradient-blob-5 {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, #A52A2A 0%, #CD5C5C 50%, transparent 100%);
+  bottom: 20%;
+  right: 20%;
+  animation: blob-move-5 23s ease-in-out infinite;
+}
+
+/* Animations de mouvement organique */
+@keyframes blob-move-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, 100px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 50px) scale(0.9);
+  }
+}
+
+@keyframes blob-move-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-80px, 60px) scale(1.15);
+  }
+  66% {
+    transform: translate(40px, -40px) scale(0.95);
+  }
+}
+
+@keyframes blob-move-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, -70px) scale(1.2);
+  }
+  66% {
+    transform: translate(-50px, 30px) scale(0.85);
+  }
+}
+
+@keyframes blob-move-4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-40px, -60px) scale(1.1);
+  }
+  66% {
+    transform: translate(70px, 80px) scale(0.9);
+  }
+}
+
+@keyframes blob-move-5 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(90px, -50px) scale(1.15);
+  }
+  66% {
+    transform: translate(-60px, 40px) scale(0.95);
+  }
+}
+
+/* Responsive - tailles plus petites sur mobile */
+@media (max-width: 768px) {
+  .gradient-blob {
+    filter: blur(60px);
+  }
+  
+  .gradient-blob-1,
+  .gradient-blob-2,
+  .gradient-blob-3,
+  .gradient-blob-4,
+  .gradient-blob-5 {
+    width: 300px;
+    height: 300px;
+  }
+}
+

@@ -1,0 +1,33 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond arrondi orange -->
+  <rect width="64" height="64" rx="14" fill="url(#gradient)"/>
+  
+  <!-- Dégradé orange -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF7A1A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF9A56;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Icône sparkles/étoiles -->
+  <g transform="translate(32, 32)">
+    <!-- Étoile centrale -->
+    <path d="M 0,-8 L 1,-1 L 8,0 L 1,1 L 0,8 L -1,1 L -8,0 L -1,-1 Z" fill="white"/>
+    
+    <!-- Petite étoile en haut à droite -->
+    <path d="M 10,-10 L 10.5,-8 L 12.5,-7.5 L 10.5,-7 L 10,-5 L 9.5,-7 L 7.5,-7.5 L 9.5,-8 Z" fill="white"/>
+    
+    <!-- Petite étoile en bas à gauche -->
+    <path d="M -10,10 L -9.5,8 L -7.5,7.5 L -9.5,7 L -10,5 L -10.5,7 L -12.5,7.5 L -10.5,8 Z" fill="white"/>
+  </g>
+</svg>
+
+
+
+
+
+
+
+
+
