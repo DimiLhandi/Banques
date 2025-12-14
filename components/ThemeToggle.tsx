@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
+import { triggerThemeTransition } from "./ThemeTransition";
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
@@ -24,25 +25,25 @@ export default function ThemeToggle() {
       document.body.classList.remove("light-mode");
       localStorage.setItem("theme", "dark");
     }
+
+    // Écouter les changements de thème pour mettre à jour l'état local
+    const observer = new MutationObserver(() => {
+      const isCurrentlyDark = !document.body.classList.contains("light-mode");
+      setIsDark(isCurrentlyDark);
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
-    setIsDark(newTheme);
-    
-    if (newTheme) {
-      // Mode sombre
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
-      document.body.classList.remove("light-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      // Mode clair
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-      document.body.classList.add("light-mode");
-      localStorage.setItem("theme", "light");
-    }
+    // Déclencher la transition au lieu de changer directement le thème
+    triggerThemeTransition(newTheme);
   };
 
   return (

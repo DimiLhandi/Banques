@@ -19,7 +19,7 @@ export default function HeroBanner({ title, subtitle, children }: HeroBannerProp
       transition={{ duration: 0.8, delay: 0.4 }}
       className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 text-white uppercase"
     >
-      Trouvez la meilleure<br />banque en ligne en 2024
+      Trouvez la meilleure<br />banque en ligne en 2026
     </motion.h1>
   );
 
@@ -44,7 +44,7 @@ export default function HeroBanner({ title, subtitle, children }: HeroBannerProp
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 bg-white/90"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-semibold mb-3 md:mb-6"
         >
           <span className="badge-text-wave">
             {"Plateforme Premium".split("").map((char, index) => (

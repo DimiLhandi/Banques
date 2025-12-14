@@ -37,7 +37,7 @@ export default function ComparatorBanner() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 text-white uppercase"
         >
-          Comparez les 9 meilleures<br />banques en ligne en 2024
+          Comparez les 9 meilleures<br />banques en ligne en 2026
         </motion.h1>
         
         <motion.p 

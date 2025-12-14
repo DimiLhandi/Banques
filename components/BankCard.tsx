@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Bank } from "@/lib/data/banks";
 import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { useBankImage } from "@/lib/utils/imageUtils";
+import React from "react";
 
 interface BankCardProps {
   bank: Bank;
@@ -11,6 +13,8 @@ interface BankCardProps {
 }
 
 export default function BankCard({ bank, index = 0 }: BankCardProps) {
+  const bankImage = useBankImage(bank.slug);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,14 +27,21 @@ export default function BankCard({ bank, index = 0 }: BankCardProps) {
           className="group relative glass p-5 sm:p-6 md:p-8 rounded-2xl border border-border hover:border-accent/50 hover:shadow-card-hover transition-all duration-300 h-full overflow-hidden"
           whileHover={{ y: -8, scale: 1.02 }}
         >
-          {/* Image de fond pour chaque banque */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              backgroundImage: `url('/banks/${bank.slug}.jpg')`,
-              filter: 'blur(0.6px)',
-            }}
-          />
+          {/* Images avec transition fluide */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={bankImage}
+              className="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                backgroundImage: `url('${bankImage}')`,
+                filter: 'blur(0.6px)',
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.9 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+          </AnimatePresence>
           
           {/* Hover gradient effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

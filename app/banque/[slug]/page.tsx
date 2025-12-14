@@ -3,6 +3,8 @@ import banks from "@/lib/data/banks";
 import AnimatedFade from "@/components/AnimatedFade";
 import Button from "@/components/Button";
 import ReferralButton from "@/components/ReferralButton";
+import BankImage from "@/components/BankImage";
+import BankBackgroundImage from "@/components/BankBackgroundImage";
 import Link from "next/link";
 import {
   ClockIcon,
@@ -56,10 +58,10 @@ export default function BankPage({ params }: { params: { slug: string } }) {
     <div className="relative">
       {/* Image de fond animée avec overlay */}
       <div className="absolute inset-0 overflow-hidden">
-        <div
+        <BankBackgroundImage
+          slug={bank.slug}
           className="absolute inset-0 bg-cover bg-center animate-breath"
           style={{
-            backgroundImage: `url('/banks/${bank.slug}.jpg')`,
             filter: 'blur(10px)',
             transform: 'scale(1.1)',
           }}
@@ -136,8 +138,8 @@ export default function BankPage({ params }: { params: { slug: string } }) {
             <AnimatedFade delay={0.2}>
               <div className="relative group flex justify-center lg:justify-center lg:-ml-20">
                 <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-xl transform transition-all duration-500 hover:scale-105 hover:rotate-2 w-full max-w-xs sm:max-w-sm">
-                  <img
-                    src={`/banks/${bank.slug}.jpg`}
+                  <BankImage
+                    slug={bank.slug}
                     alt={`Carte bancaire ${bank.name}`}
                     className="w-full h-auto object-cover"
                   />

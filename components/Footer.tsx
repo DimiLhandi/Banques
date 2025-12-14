@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import BackToTopButton from "./BackToTopButton";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2026;
   const [isNavigationOpen, setIsNavigationOpen] = useState(true);
   const [isBanquesOpen, setIsBanquesOpen] = useState(true);
   const [isContactOpen, setIsContactOpen] = useState(true);

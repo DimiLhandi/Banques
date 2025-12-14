@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ThemeTransition from "@/components/ThemeTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <body className={`${inter.className} bg-black text-white antialiased`}>
-        <Header />
-        <main className="min-h-screen pt-20">{children}</main>
-        <Footer />
+        <ThemeTransition>
+          <Header />
+          <main className="min-h-screen pt-20">{children}</main>
+          <Footer />
+        </ThemeTransition>
       </body>
     </html>
   );

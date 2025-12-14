@@ -6,12 +6,26 @@ Ce dossier contient les images de fond pour les pages de détail de chaque banqu
 
 ---
 
+## 🌓 Système Jour/Nuit
+
+Le site supporte maintenant **deux versions d'images** selon le thème :
+
+### 🌙 Mode Nuit (Dark) - Images actuelles
+- Format : `{slug}.jpg` (ex: `fortuneo.jpg`)
+- Ces images sont utilisées en mode sombre (par défaut)
+- **Les images actuelles sont déjà en version nuit**
+
+### ☀️ Mode Jour (Light) - Nouvelles images
+- Format : `{slug}-light.jpg` (ex: `fortuneo-light.jpg`)
+- Ces images sont utilisées en mode clair
+- **À ajouter pour chaque banque**
+
+---
+
 ## 📋 Liste des images à ajouter :
 
-### ✅ À faire maintenant :
-- **fortuneo.jpg** ← Image de la carte noire Fortuneo sur fond orange/rouge (fournie par l'utilisateur)
-
-### 📌 Optionnel (autres banques) :
+### 🌙 Mode Nuit (déjà existantes ou à ajouter) :
+- **fortuneo.jpg** ← Image de la carte noire Fortuneo sur fond orange/rouge
 - monabanq.jpg
 - trade-republic.jpg
 - hello-bank.jpg
@@ -21,24 +35,45 @@ Ce dossier contient les images de fond pour les pages de détail de chaque banqu
 - revolut.jpg
 - n26.jpg
 
+### ☀️ Mode Jour (à ajouter) :
+- **fortuneo-light.jpg** ← Version claire de l'image Fortuneo
+- monabanq-light.jpg
+- trade-republic-light.jpg
+- hello-bank-light.jpg
+- bforbank-light.jpg
+- boursobank-light.jpg
+- wise-light.jpg
+- revolut-light.jpg
+- n26-light.jpg
+
 ---
 
 ## 🎯 Instructions :
 
-1. **Sauvegardez l'image Fortuneo** que vous avez fournie
-2. **Renommez-la** en `fortuneo.jpg`
+### Pour le Mode Nuit :
+1. **Sauvegardez l'image** de la banque
+2. **Renommez-la** en `{slug}.jpg` (ex: `fortuneo.jpg`)
 3. **Placez-la** dans ce dossier (`public/banks/`)
-4. **Rafraîchissez** la page http://localhost:3000/banque/fortuneo
+
+### Pour le Mode Jour :
+1. **Créez une version claire** de l'image (adaptée au fond clair)
+2. **Renommez-la** en `{slug}-light.jpg` (ex: `fortuneo-light.jpg`)
+3. **Placez-la** dans ce dossier (`public/banks/`)
+
+### Test :
+4. **Rafraîchissez** la page et **basculer entre les thèmes** pour voir les deux versions
 
 ---
 
 ## ✨ Résultat attendu :
 
-L'image s'affichera en arrière-plan de la page Fortuneo avec :
-- Effet blur (flou)
-- Overlay sombre pour lisibilité
+Les images s'afficheront automatiquement selon le thème :
+- **Mode Nuit** : Utilise `{slug}.jpg` (images actuelles)
+- **Mode Jour** : Utilise `{slug}-light.jpg` (nouvelles images)
+- Changement automatique lors du basculement de thème
+- Effet blur (flou) en arrière-plan
+- Overlay pour lisibilité
 - Animation subtile
-- Texte blanc par-dessus
 
 ---
 
@@ -51,6 +86,8 @@ L'image s'affichera en arrière-plan de la page Fortuneo avec :
 
 ---
 
-**Le dossier est prêt ! Ajoutez l'image `fortuneo.jpg` ici. 🎉**
+**Le système est prêt ! Ajoutez vos images jour et nuit ici. 🎉**
+
+> 💡 **Note** : Si une image `-light.jpg` n'existe pas, le système utilisera automatiquement l'image de mode nuit par défaut.
 
 
