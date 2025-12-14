@@ -10,6 +10,29 @@ type HeroBannerProps = {
 };
 
 export default function HeroBanner({ title, children }: HeroBannerProps) {
+  // Valeurs par défaut si title et children ne sont pas fournis
+  const defaultTitle = (
+    <motion.h1
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8, delay: 0.4 }}
+      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 text-white uppercase"
+    >
+      Trouvez la meilleure<br />banque en ligne en 2024
+    </motion.h1>
+  );
+
+  const defaultChildren = (
+    <motion.p
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: 0.6 }}
+      className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl"
+    >
+      Comparaison objective et indépendante des meilleures banques en ligne pour vous aider à faire le bon choix. Profitez de notre expertise et de notre analyse détaillée des offres pour choisir la banque en ligne qui correspond parfaitement à vos besoins et à votre profil financier.
+    </motion.p>
+  );
+
   return (
     <div className="hero-banner mb-12 sm:mb-16 md:mb-20 lg:mb-24">
       {/* cartes bancaires 3D flottantes */}
@@ -35,33 +58,11 @@ export default function HeroBanner({ title, children }: HeroBannerProps) {
           </span>
         </motion.div>
 
-        {/* ✅ Titre passé depuis la page */}
-        {title}
+        {/* ✅ Titre passé depuis la page ou valeur par défaut */}
+        {title || defaultTitle}
 
-        {/* ✅ Contenu enfant optionnel */}
-        {children}
-      </div>
-    </div>
-  );
-}
-        
-        <motion.h1
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 text-white uppercase"
-        >
-          Trouvez la meilleure<br />banque en ligne en 2024
-        </motion.h1>
-        
-        <motion.p
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl"
-        >
-          Comparaison objective et indépendante des meilleures banques en ligne pour vous aider à faire le bon choix. Profitez de notre expertise et de notre analyse détaillée des offres pour choisir la banque en ligne qui correspond parfaitement à vos besoins et à votre profil financier.
-        </motion.p>
+        {/* ✅ Contenu enfant optionnel ou valeur par défaut */}
+        {children || defaultChildren}
       </div>
     </div>
   );
