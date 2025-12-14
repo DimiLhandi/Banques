@@ -6,10 +6,11 @@ import React from "react";
 
 type HeroBannerProps = {
   title?: React.ReactNode;
+  subtitle?: string;
   children?: React.ReactNode;
 };
 
-export default function HeroBanner({ title, children }: HeroBannerProps) {
+export default function HeroBanner({ title, subtitle, children }: HeroBannerProps) {
   // Valeurs par défaut si title et children ne sont pas fournis
   const defaultTitle = (
     <motion.h1
@@ -60,6 +61,18 @@ export default function HeroBanner({ title, children }: HeroBannerProps) {
 
         {/* ✅ Titre passé depuis la page ou valeur par défaut */}
         {title || defaultTitle}
+
+        {/* ✅ Subtitle optionnel */}
+        {subtitle && (
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mb-4 md:mb-6"
+          >
+            {subtitle}
+          </motion.p>
+        )}
 
         {/* ✅ Contenu enfant optionnel ou valeur par défaut */}
         {children || defaultChildren}
