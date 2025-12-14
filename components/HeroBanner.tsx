@@ -2,34 +2,48 @@
 
 import { motion } from "framer-motion";
 import FloatingBankCards from "./FloatingBankCards";
+import React from "react";
 
-export default function HeroBanner() {
+type HeroBannerProps = {
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+};
+
+export default function HeroBanner({ title, children }: HeroBannerProps) {
   return (
     <div className="hero-banner mb-12 sm:mb-16 md:mb-20 lg:mb-24">
-      {/* Cartes bancaires 3D flottantes */}
+      {/* cartes bancaires 3D flottantes */}
       <FloatingBankCards />
-      
+
       <div className="hero-content">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-semibold mb-3 md:mb-6"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 bg-white/90"
         >
           <span className="badge-text-wave">
             {"Plateforme Premium".split("").map((char, index) => (
               <span
                 key={index}
                 className="inline-block"
-                style={{
-                  animationDelay: `${index * 0.05}s`,
-                }}
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
                 {char === " " ? "\u00A0" : char}
               </span>
             ))}
           </span>
         </motion.div>
+
+        {/* ✅ Titre passé depuis la page */}
+        {title}
+
+        {/* ✅ Contenu enfant optionnel */}
+        {children}
+      </div>
+    </div>
+  );
+}
         
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
